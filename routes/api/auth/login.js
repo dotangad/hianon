@@ -7,16 +7,16 @@ module.exports = {
   schema: Joi.object().keys({
     username: Joi.string().required(),
     password: Joi.string()
-      .min(8)
+      .min(4)
       .max(32)
       .required()
   }),
   handler: async ctx => {
     try {
-      const { email, password } = ctx.request.body
+      const { username, password } = ctx.request.body
 
       // Check if account  exists
-      const u = await User.findOne({ where: { email } })
+      const u = await User.findOne({ where: { username } })
       if (!u) {
         throw new Error(
           JSON.stringify({
@@ -36,7 +36,7 @@ module.exports = {
         )
       }
 
-      ctx.send(ctx, 200, true, `Logged in as ${u.dataValues.fullName}`, {
+      ctx.send(ctx, 200, true, `Logged in as ${u.dataValues.username}`, {
         token: await jwt.createToken(u.dataValues)
       })
     } catch (e) {
