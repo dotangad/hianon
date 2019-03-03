@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Footer from '../components/Footer'
+
 const Content = styled.div`
   height: 90%;
   width: 100%;
@@ -8,17 +10,6 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
-
-const Footer = styled.div`
-  height: 10%;
-  width: 100%;
-  background: #491e97;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.9rem;
 `
 
 const HeadingContainer = styled.div`
@@ -71,7 +62,6 @@ const AddNickname = styled.div`
 `
 
 const SendButton = styled.button`
-  width: auto;
   padding: 10px 15px;
   cursor: pointer;
   font-size: 1rem;
@@ -81,7 +71,6 @@ const SendButton = styled.button`
   border-radius: 5px;
   text-transform: uppercase;
   font-weight: 600;
-  justify-self: flex-start;
   margin: 30px 0;
   &:focus {
     outline: none;
@@ -133,6 +122,7 @@ class Form extends React.Component {
 
     fetch('/api/messages', {
       method: 'POST',
+      cors: true,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -213,11 +203,6 @@ export default () => (
       </HeadingContainer>
       <Form />
     </Content>
-    <Footer>
-      <div>
-        Made with <span style={{ color: 'red' }}>&lt;3</span> and JavaScript by{' '}
-        <a href="https://angadsingh.co">dotangad</a>
-      </div>
-    </Footer>
+    <Footer />
   </>
 )

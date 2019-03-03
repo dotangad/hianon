@@ -5,9 +5,11 @@ const jwt = require('../../lib/jwt')
 const { validateAgainst } = require('../../lib/validation')
 const rtr = new Router()
 
-rtr.get('/', jwt.verifyToken, async ctx => {
-  ctx.body = await Message.findAll()
-})
+rtr.get('/', jwt.verifyToken, async ctx =>
+  ctx.send(ctx, 200, true, 'Messages in res.messages', {
+    messages: await Message.findAll()
+  })
+)
 
 rtr.post(
   '/',
@@ -18,7 +20,7 @@ rtr.post(
   },
   validateAgainst(
     Joi.object().keys({
-      message: Joi.string(),
+      message: Joi.string().required(),
       nickname: Joi.string()
     })
   ),
