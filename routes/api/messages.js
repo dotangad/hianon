@@ -11,18 +11,22 @@ rtr.get('/', jwt.verifyToken, async ctx => {
 
 rtr.post(
   '/',
+  async (ctx, next) => {
+    console.log('asdsad')
+    console.log(ctx.request.body)
+    await next()
+  },
   validateAgainst(
     Joi.object().keys({
-      message: Joi.string().required(),
+      message: Joi.string(),
       nickname: Joi.string()
     })
   ),
-  jwt.verifyToken,
   async ctx => {
     try {
       const msg = await Message.create(ctx.request.body)
 
-      ctx.send(ctx, 200, true, 'Message saved', msg.dataValues)
+      ctx.send(ctx, 200, true, 'Message saved', { msg: msg.dataValues })
     } catch (e) {
       try {
         const err = JSON.parse(e.message)

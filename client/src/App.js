@@ -1,3 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-export default () => <div>hello, world</div>
+import Index from './pages/Index'
+import './global.css'
+
+const about = () => <div>about page</div>
+
+export default () => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Index} />
+      <Route exact path="/about" component={about} />
+    </Switch>
+  </Router>
+)
